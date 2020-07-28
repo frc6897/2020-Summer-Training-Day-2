@@ -42,7 +42,8 @@ public class Robot extends TimedRobot {
   private Joystick joystick = new Joystick(0);
   private JoystickButton button2 = new JoystickButton(joystick, 2);
   private TalonSRX talon = new TalonSRX(0);
-  private Solenoid solenoid = new Solenoid(0);
+  private Solenoid solenoid1 = new Solenoid(0);
+  private Solenoid solenoid2 = new Solenoid(1);
 
   private CANSparkMax spark = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
 
@@ -73,11 +74,11 @@ public class Robot extends TimedRobot {
 
     talon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));
     spark.set(joystick.getRawAxis(6));
-    
-    solenoid.set(joystick.getRawButton(1));
 
-    if(joystick.getRawButton(1) && !isPressed) {
-      solenoid.set(true);
+    solenoid1.set(joystick.getRawButton(1));
+
+    if(joystick.getRawButton(2) && !isPressed) {
+      solenoid2.set(true);
       isPressed = true;
     }
   }
