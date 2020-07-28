@@ -105,6 +105,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     
+    talon1.set(ControlMode.PercentOutput, joy1.getRawAxis(1));
+
+
   }
 
   /**
