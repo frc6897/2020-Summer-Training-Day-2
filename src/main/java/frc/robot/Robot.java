@@ -30,6 +30,9 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  private Joystick joy1 = new Joystick(0);
+  private TalonSRX talon1 = new TalonSRX(0);
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -92,13 +95,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopInit() {
+
   }
+
 
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic() {
+    
   }
 
   /**
