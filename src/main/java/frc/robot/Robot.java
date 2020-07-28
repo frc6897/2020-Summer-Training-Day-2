@@ -5,11 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/*
+*Siddharth Lohani
+*Sarthak Jain
+*/
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SolenoidBase;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +38,13 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+  private Joystick joystick = new Joystick(0);
+  private JoystickButton button2 = new JoystickButton(joystick, 2);
+  private TalonSRX talon = new TalonSRX(0);
+  private Solenoid solenoid = new Solenoid(0);
+
+  private CANSparkMax spark = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
 
   /**
    * This function is run when the robot is first started up and should be
@@ -43,8 +65,21 @@ public class Robot extends TimedRobot {
    * <p>This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
+
+   boolean isPressed = false; 
+
   @Override
   public void robotPeriodic() {
+
+    talon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));
+    spark.set(joystick.getRawAxis(6));
+    
+    solenoid.set(joystick.getRawButton(1));
+
+    if(joystick.getRawButton(1) && !isPressed) {
+      solenoid.set(true);
+      isPressed = true;
+    }
   }
 
   /**
