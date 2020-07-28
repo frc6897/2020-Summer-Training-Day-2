@@ -10,6 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Joystick;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +29,12 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+  private Joystick joystick = new Joystick(0);
+  private TalonSRX talon1 = new TalonSRX(0);
+  private TalonSRX talon2 = new TalonSRX(1);
+  private CANSparkMax sparkMax = new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless);
+
 
   /**
    * This function is run when the robot is first started up and should be
