@@ -50,7 +50,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    spark2.follow(spark1);
+    spark2.follow(spark1,true);
+    talon1.setNeutralMode(NeutralMode.Coast);
   }
 
   /**
@@ -111,8 +112,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    
-
+    if (joyIndexer.getRawButton(5)) {
+      spark1.set(-0.8);
+    }
+    if (joyIndexer.getRawButton(7)) {
+      talon1.set(ControlMode.PercentOutput, -0.8);
+    }
   }
 
   /**
