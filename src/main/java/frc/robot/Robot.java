@@ -34,6 +34,10 @@ public class Robot extends TimedRobot {
   private CANSparkMax spark2 = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
   private TalonSRX talon1 = new TalonSRX(2);
 
+  private Joystick button1 = new Joystick(3);
+  private Joystick button2 = new Joystick(4);
+
+  
   
 
   /**
@@ -107,6 +111,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    if()
 
   }
 
