@@ -16,13 +16,19 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+//import for joystick commands
 import edu.wpi.first.wpilibj.Joystick;
+
+//import for a solenoid
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SolenoidBase;
 
+//import for SparkMax
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
+//import for TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -39,9 +45,11 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  //This is the PS4 controller the 0 referes to the port on the computer
   private Joystick joystick = new Joystick(0);
-  private JoystickButton button2 = new JoystickButton(joystick, 2);
+
   private TalonSRX talon = new TalonSRX(0);
+
   private Solenoid solenoid1 = new Solenoid(0);
   private Solenoid solenoid2 = new Solenoid(1);
 
@@ -71,10 +79,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-
+    //This sets the talon speed by getting the value of the L1. The 5 indicates a button value corresponding to a joystick or button on the controller
     talon.set(ControlMode.PercentOutput, joystick.getRawAxis(5));
     spark.set(joystick.getRawAxis(6));
 
+    //This uses a button to activate the solenoid
     solenoid1.set(joystick.getRawButton(1));
 
     if(joystick.getRawButton(2) && !isPressed) {
