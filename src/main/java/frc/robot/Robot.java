@@ -36,10 +36,6 @@ public class Robot extends TimedRobot {
 
   private Joystick joyIndexer = new Joystick(3);
 
-
-  
-  
-
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -114,9 +110,12 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     if (joyIndexer.getRawButton(5)) {
       spark1.set(-0.8);
+      talon1.set(ControlMode.PercentOutput, 0.8);
+      talon1.setNeutralMode(NeutralMode.Brake);
     }
     if (joyIndexer.getRawButton(7)) {
       talon1.set(ControlMode.PercentOutput, -0.8);
+      talon1.setNeutralMode(NeutralMode.Coast);
     }
   }
 
