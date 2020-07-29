@@ -100,6 +100,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopInit() {
+    
+    talon2.set(ControlMode.Follower, 0);                  //the TalonSRXs will 
+    talon2.setInverted(InvertType.OpposeMaster);         // be the two top motors
+                                                        //  talon1 is top left motor, talon2 is top right motor
+
   }
 
   /**
@@ -111,10 +116,6 @@ public class Robot extends TimedRobot {
     /* Indexer Mechanism
      * See image in project folder for motor locations
      */ 
-
-    talon2.set(ControlMode.Follower, 0);                  //the TalonSRXs will 
-    talon2.setInverted(InvertType.OpposeMaster);         // be the two top motors
-                                                        //  talon1 is top left motor, talon2 is top right motor
     
     //if the square button is pressed, load balls in the indexer
 
