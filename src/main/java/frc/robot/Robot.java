@@ -7,8 +7,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+
+// Hi, my name is Aryan. I put these comments in the code to help you better understand.
+
 package frc.robot;
 
+/*
+  If you go to your folder folders on the left side of VS Code. You will see a section called Venderdeps under Robot.java.
+  Essentially, the vendor libraries that you add will appear there at that location. What these import statement do is that
+  they pull the infromation from those Vendor Dependicies and allow us to use their commands in our code. For instance, the 
+  com.ctre.pheonix.motorcontrol.TalonSRX allows us to take control of the Talon SRX speed controller. 
+*/
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,6 +39,12 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  /*
+  What lines 45 and 46 are doing is they are creating a variable by which we can call back the Speed Controller
+  and the Talon SRX. The joy1 variable is creating a new Joystick variable for a controller connected on Port 0. The ports of
+  the controller can be checked using Driver Station. The talon 1 variable is creating a new Talon SRX variable for
+  a speed controller connected on Port 0. The port can be checked using Pheonix Tuner. 
+  */
   private Joystick joy1 = new Joystick(0);
   private TalonSRX talon1 = new TalonSRX(0);
 
@@ -105,6 +120,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     
+    /*
+      This void method is called Teleop Periodic. As you know, Teleop is a mode in Driver Station that can be turned
+      off or on. What teleopPeriodic does is that it runs the following code every 20ms. 20ms is really fast as an FYI. 
+      What this means is that this method is basically looping the code within it as long as telop is on. What line 128 
+      is doing is it's setting the speed of the Talon SRX to the value of the Joystick's first axis. What ControlMode.
+      PercentOutput is doing is it's basically saying that the motor is going to give some output which means it's going
+      to spin. 
+    */
     talon1.set(ControlMode.PercentOutput, joy1.getRawAxis(1));
 
 
