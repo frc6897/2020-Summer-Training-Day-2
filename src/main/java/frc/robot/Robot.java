@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
   */
   CANSparkMax slideMotor1 = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
   CANSparkMax slideMotor2 = new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless);
-  Talon shootMotor = new Talon(0);
+  TalonSRX shootMotor = new TalonSRX(0);
 
   Joystick joy = new Joystick(3); // Does Joystick interfere w/ CAN ports or PWM ports or no?
   final int SHOOTBUTTON = 2; // Shoot = X
@@ -112,8 +112,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopInit() {
-    // These two work with each other
-    slideMotor2.follow(slideMotor1);
+    // These two work in opposite direction
+    slideMotor2.follow(slideMotor1, true);
   }
 
   /**
@@ -123,11 +123,10 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     if (joy.getRawButton(ELEVATEBUTTON)) {
       slideMotor1.set(1);
-      shootMotor.set(-1);
 
     } else if (joy.getRawButton(SHOOTBUTTON)) {
       slideMotor1.set(-1);
-      shootMotor.set(1);
+      shootMotor.set(ControlMode.PercentOutput, 1);
 
     }
   }
