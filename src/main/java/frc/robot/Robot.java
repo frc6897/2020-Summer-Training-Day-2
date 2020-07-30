@@ -7,9 +7,19 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +33,22 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+  // Motors for indexer
+  /*
+  I'm not 100% on the mechanism, but as I understand it there are 2 motors
+  that work together to shift up & down, and then 1 motor with a big
+  wheel finally pushes the balls into the shooter.
+  */
+  CANSparkMax slideMotor1 = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
+  CANSparkMax slideMotor2 = new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless);
+  Talon shootMotor = new Talon(0);
+
+  Joystick joy = new Joystick(3); // Does Joystick interfere w/ CAN ports or PWM ports or no?
+  final int SHOOTBUTTON = 2; // Shoot = X
+  final int ELEVATEBUTTON = 1; // Move up = Square
+
+
 
   /**
    * This function is run when the robot is first started up and should be
@@ -86,6 +112,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopInit() {
+    // These two work with each other
+    slideMotor2.follow(slideMotor1);
   }
 
   /**
@@ -93,6 +121,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    if (joy.getRawButton(ELEVATEBUTTON)) {
+      slideMotor1.set(1);
+      shootMotor.set(-1);
+
+    } else if (joy.getRawButton(SHOOTBUTTON)) {
+      slideMotor1.set(-1);
+      shootMotor.set(1);
+
+    }
   }
 
   /**
