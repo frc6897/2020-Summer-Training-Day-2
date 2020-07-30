@@ -10,6 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.firstwpilibj.Joystick;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +30,11 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private CANSparkMax spark1 = new CANSparkMax(0, CANSparkMaxLowLevel.MotorType.kBrushless);
+  private CANSparkMax spark2 = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
+  private TalonSRX talon = new TalonSRX(2);
+  private Joysticks joy1 = new Joysticks(0);
+  
 
   /**
    * This function is run when the robot is first started up and should be
@@ -93,6 +105,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    if (joy1.getRawButton(3)) {
+    talon.set(ControlMode.PercentOutput, 1);
+    }
+    if (joy1.getRawButton(1)) {
+    spark1.set(-1);
+    spark2.set(1);
+    }
   }
 
   /**
