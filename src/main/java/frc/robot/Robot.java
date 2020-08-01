@@ -22,6 +22,15 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 /**
+FEEDBACK
+- Excellent job! No issues
+- To answer your question, joystick ports refer to laptop ports in driver station, so CAN, PWM, and joystick
+  ports do not interfere with each other
+ */
+
+
+
+/**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
