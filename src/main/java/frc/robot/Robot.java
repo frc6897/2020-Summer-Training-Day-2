@@ -17,6 +17,19 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode; 
 
+
+/**
+FEEDBACK
+- Good job! Functionality is great, just one thing:
+  - I understand why you used setNeutralMode, but it isn't necessary because the balls aren't heavy enough
+    move the motors
+ */
+
+
+
+
+
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
