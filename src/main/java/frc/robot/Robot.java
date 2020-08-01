@@ -20,6 +20,19 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
 /**
+FEEDBACK
+- Good job! You nailed the functionality
+- Good job w/ comments
+- Couple things:
+  - Since teleop periodic is in a loop, the else-if isn't required: logically, it makes more sense
+    to write 2 separate if statements
+  - the else statement is redundant
+*/
+
+
+
+
+/**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
