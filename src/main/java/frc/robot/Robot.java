@@ -19,6 +19,15 @@ import com.revrobotics.CANSparkMaxLowLevel;
 
 
 /**
+FEEDBACK
+- Would've preferred it if you used master-slave but what u did is fine
+- Good job on functionality
+- Use more descriptive variable names than spark1, spark 2, talon, etc.
+- Watch indentation in the if statements (msg me on slack if u don't understand what this means)
+ */
+
+
+/**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
