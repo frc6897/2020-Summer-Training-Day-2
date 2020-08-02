@@ -10,6 +10,27 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Joystick;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+
+/**
+FEEDBACK
+- Good job! You nailed the functionality
+- Good job w/ comments
+- Couple things:
+  - Since teleop periodic is in a loop, the else-if isn't required: logically, it makes more sense
+    to write 2 separate if statements
+  - the else statement is redundant
+*/
+
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +44,12 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+  private Joystick joystick = new Joystick(0);
+  private TalonSRX talon1 = new TalonSRX(0);
+  private TalonSRX talon2 = new TalonSRX(1);
+  private CANSparkMax sparkMax = new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless);
+
 
   /**
    * This function is run when the robot is first started up and should be
@@ -86,6 +113,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopInit() {
+    
+    talon2.set(ControlMode.Follower, 0);                  //the TalonSRXs will 
+    talon2.setInverted(InvertType.OpposeMaster);         // be the two top motors
+                                                        //  talon1 is top left motor, talon2 is top right motor
+
   }
 
   /**
@@ -93,6 +125,26 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+
+    /* Indexer Mechanism
+     * See image in project folder for motor locations
+     */ 
+    
+    //if the square button is pressed, load balls in the indexer
+
+    if(joystick.getRawButton(1)) {
+      sparkMax.set(1);                              // sets the sparkmax (bottom motor) to clockwise, which pulls balls into the indexer
+      talon1.set(ControlMode.PercentOutput, -1);   // sets talon1 (top left, master) counterclockwise and talon2 (top right, slave) to clockwise, pushing the ball up
+
+      // if X button is pressed, move balls down and into shooter
+    } else if (joystick.getRawButton(2)) {
+      sparkMax.set(1);                              //sets sparkmax (bottom motor) to clockwise, pushing balls into shooter mechanism
+      talon1.set(ControlMode.PercentOutput, 1);    // sets talon1 (top left, master) clockwise and talon2 (top right, slave) to counterclockwise, pulling the ball down
+
+    } else {
+      return;                                    //if no buttons are pressed at the moment, exit the conditional statement and return to the loop
+    }
+
   }
 
   /**
