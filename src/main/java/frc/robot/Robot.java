@@ -10,6 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Joystick;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,6 +34,15 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
+
+   CANSparkMax Motor1 = new CANSparkMax(1,CANSparkMaxLowLevel.MotorType.kBrushless);
+   CANSparkMax Motor2 = new CANSparkMax(2,CANSparkMaxLowLevel.MotorType.kBrushless);
+   TalonSRX shootingMotor = new TalonSRX(0);
+
+   Joystick joystick = new Joystick(5);
+   final int SHOOT_COMMAND_BUTTON = 8;
+   final int ELEVATE_COMMAND_BUTTON = 2;
+
   @Override
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
@@ -86,13 +101,26 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopInit() {
+    //Master-slave configuration
+    Motor2.follow(Motor1,true);
   }
+  
 
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic() {
+    if(joystick.getRawButton(ELEVATE_COMMAND_BUTTON)){// don't put 8 because bind can change
+    Motor1.set(1);
+    ELEVATE_COMMAND_BUTTON.set(ControlMode.PercentOutput,1);
+
+    }else if (joystickgetRawButton(SHOOT_COMMAND_BUTTON)){//don't put 2 because bind can change
+      Motor1.set(-1);
+      SHOOT_COMMAND_BUTTON.set(ControlMode.PercentOutput,1);
+
+    }
+    
   }
 
   /**
