@@ -11,6 +11,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.Joystick;
+
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -23,6 +31,12 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  //the 3  motors
+  private CANSparkMax sparkMaster = new CANSparkMax(0,CANSparkMaxLowLevel.MotorType.kBrushless);
+  private CANSparkMax sparkSlave = new CANSparkMax(1,CANSparkMaxLowLevel.MotorType.kBrushless);
+  private TalonSRX talonLeft = new TalonSRX(2);
+  // joystick
+  private Joystick joystick;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -33,6 +47,11 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    sparkSlave.follow(sparkMaster);
+
+    joystick = new Joystick(0);
+
   }
 
   /**
@@ -90,9 +109,20 @@ public class Robot extends TimedRobot {
 
   /**
    * This function is called periodically during operator control.
+   * 
+   * @param isInverted
    */
   @Override
-  public void teleopPeriodic() {
+  public void teleopPeriodic(boolean isInverted) {
+    //i am trying to set the slave SparkMax motor to produce the opposite output of the master but i can't seem to exactly figure out how to do so
+    if(joystick.getRawButton(1)) {
+      sparkMaster.set(.5);
+      sparkSlave.setInverted(isInverted);
+    }
+
+    if(joystick.getRawButton(3)){
+      talonLeft.set(ControlMode.PercentOutput,1);
+    }
   }
 
   /**
