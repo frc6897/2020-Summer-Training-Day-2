@@ -107,10 +107,12 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     if(j.getRawButton(1))//when square is held, turn on top motors
     {
+      shooter.set(ControlMode.PercentOutput,0);
       topL.set(1);
     }
     else if(j.getRawButton(2))//when X is held, turn on shooter
     {
+      topL.set(0);
       shooter.set(ControlMode.PercentOutput,1);
     }
     else//when buttons are not pressed, turn off all motors
