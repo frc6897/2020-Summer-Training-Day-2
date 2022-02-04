@@ -5,11 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+Apackage frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.firstwpilibj.Joystick;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+
+
+/**
+FEEDBACK
+- Would've preferred it if you used master-slave but what u did is fine
+- Good job on functionality
+- Use more descriptive variable names than spark1, spark 2, talon, etc.
+- Watch indentation in the if statements (msg me on slack if u don't understand what this means)
+ */
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +39,11 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private CANSparkMax spark1 = new CANSparkMax(0, CANSparkMaxLowLevel.MotorType.kBrushless);
+  private CANSparkMax spark2 = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
+  private TalonSRX talon = new TalonSRX(2);
+  private Joysticks joy1 = new Joysticks(0);
+  
 
   /**
    * This function is run when the robot is first started up and should be
@@ -93,6 +114,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    if (joy1.getRawButton(3)) {
+    talon.set(ControlMode.PercentOutput, 1);
+    }
+    if (joy1.getRawButton(1)) {
+    spark1.set(-1);
+    spark2.set(1);
+    }
   }
 
   /**
